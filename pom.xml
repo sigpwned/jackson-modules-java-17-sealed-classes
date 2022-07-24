@@ -3,7 +3,7 @@
   
     <groupId>com.sigpwned</groupId>
     <artifactId>jackson-modules-java17-sealed-classes</artifactId>
-    <version>0.0.0-SNAPSHOT</version>
+    <version>0.0.0</version>
     <name>Jackson Module: Java 17 Sealed Classes</name>
     <packaging>jar</packaging>
     <description>Improved support for Java 17 Sealed Classes</description>
