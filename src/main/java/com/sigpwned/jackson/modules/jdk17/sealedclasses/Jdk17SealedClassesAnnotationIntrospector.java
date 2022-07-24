@@ -29,6 +29,10 @@ public class Jdk17SealedClassesAnnotationIntrospector extends JacksonAnnotationI
    * annotation. The subtypes themselves can use a {@link JsonTypeName} annotation to customize
    * their name, or use the default value assigned by Jackson. The top-level sealed class should
    * still use {@link JsonTypeInfo}.
+   * 
+   * For now, only one "layer" of sealed class subtypes is discovered, although this could change in
+   * a future release. Of course, users are always free to use {@link JsonSubTypes} for more complex
+   * serialization needs.
    */
   @Override
   public List<NamedType> findSubtypes(Annotated a) {
