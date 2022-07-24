@@ -49,5 +49,5 @@ jobs:
         verify                                                 \
         org.jacoco:jacoco-maven-plugin:report                  \
         org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-        -Dsonar.projectKey=sigpwned_jackson-modules-java-17-sealed-classes
+        -Dsonar.projectKey=sigpwned_jackson-modules-java-17-sealed-classes \
         --file pom.xml
