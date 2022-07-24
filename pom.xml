@@ -28,6 +28,9 @@
     <properties>
         <sonar.organization>sigpwned</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.exclusions>
+          **/pom.xml
+        </sonar.exclusions>
     </properties>
 
     <build>
