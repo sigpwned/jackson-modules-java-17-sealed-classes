@@ -15,10 +15,8 @@ public class Jdk17SealedClassesModuleTest {
    * Our {@link ObjectMapper} uses the default configuration with the
    * {@link Jdk17SealedClassesModule} added in and alphabetical keys for easy testing.
    */
-  @SuppressWarnings("deprecation")
   public static final ObjectMapper MAPPER =
       new ObjectMapper().registerModule(new Jdk17SealedClassesModule());
-  // .configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 
   /**
    * The "ExampleOne" objects test serialization of sealed classes without a JsonSubTypes

@@ -17,6 +17,7 @@ public class Jdk17SealedClassesModule extends Module {
 
   @Override
   public void setupModule(SetupContext context) {
-    context.appendAnnotationIntrospector(new Jdk17AnnotationIntrospector());
+    // Add our sealed classes handler at the end of the handler list
+    context.appendAnnotationIntrospector(new Jdk17SealedClassesAnnotationIntrospector());
   }
 }
