@@ -113,5 +113,5 @@ Either example would result in the following JSON:
     
 ## Acknowledgements
 
-Many thanks to @shartte for his work on [FasterXML/jackson-module-kotlin#239](https://github.com/FasterXML/jackson-module-kotlin/issues/239), where he implemented a very similar feature for Kotlin. And of course, thank you to @cowtowncoder for maintaining the excellent [FasterXML/jackson](https://github.com/FasterXML/jackson) library for all this time.
+Many thanks to [@shartte](https://github.com/shartte) for his work on [FasterXML/jackson-module-kotlin#239](https://github.com/FasterXML/jackson-module-kotlin/issues/239), where he implemented a very similar feature for Kotlin. And of course, thank you to [@cowtowncoder](https://github.com/cowtowncoder) for maintaining the excellent [FasterXML/jackson](https://github.com/FasterXML/jackson) library for all this time.
 
