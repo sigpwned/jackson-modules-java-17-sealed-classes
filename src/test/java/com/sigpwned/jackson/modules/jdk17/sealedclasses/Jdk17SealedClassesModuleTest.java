@@ -13,10 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Jdk17SealedClassesModuleTest {
   /**
    * Our {@link ObjectMapper} uses the default configuration with the
-   * {@link Jdk17SealedClassesModule} added in.
+   * {@link Jdk17SealedClassesModule} added in and alphabetical keys for easy testing.
    */
+  @SuppressWarnings("deprecation")
   public static final ObjectMapper MAPPER =
       new ObjectMapper().registerModule(new Jdk17SealedClassesModule());
+  // .configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 
   /**
    * The "ExampleOne" objects test serialization of sealed classes without a JsonSubTypes
@@ -116,7 +118,14 @@ public class Jdk17SealedClassesModuleTest {
   }
 
   @Test
-  public void oneAlphaTest() throws IOException {
+  public void oneAlphaSerializationTest() throws IOException {
+    final String alpha = "apple";
+    final String serialized = MAPPER.writeValueAsString(new AlphaExampleOne(alpha));
+    assertThat(serialized, is("{\"type\":\"alpha\",\"alpha\":\"" + alpha + "\"}"));
+  }
+
+  @Test
+  public void oneAlphaDeserializationTest() throws IOException {
     final String alpha = "apple";
     ExampleOne one =
         MAPPER.readValue("{\"type\":\"alpha\",\"alpha\":\"" + alpha + "\"}", ExampleOne.class);
@@ -124,12 +133,20 @@ public class Jdk17SealedClassesModuleTest {
   }
 
   @Test
-  public void oneBravoTest() throws IOException {
+  public void oneBravoDeserializationTest() throws IOException {
     final String bravo = "blueberry";
     ExampleOne one = MAPPER.readValue(
         "{\"type\":\"Jdk17SealedClassesModuleTest$BravoExampleOne\",\"bravo\":\"" + bravo + "\"}",
         ExampleOne.class);
     assertThat(one, is(new BravoExampleOne(bravo)));
+  }
+
+  @Test
+  public void oneBravoSerializationTest() throws IOException {
+    final String bravo = "blueberry";
+    final String serialized = MAPPER.writeValueAsString(new BravoExampleOne(bravo));
+    assertThat(serialized, is(
+        "{\"type\":\"Jdk17SealedClassesModuleTest$BravoExampleOne\",\"bravo\":\"" + bravo + "\"}"));
   }
 
   /**
@@ -234,7 +251,14 @@ public class Jdk17SealedClassesModuleTest {
   }
 
   @Test
-  public void twoAlphaTest() throws IOException {
+  public void twoAlphaSerializationTest() throws IOException {
+    final String alpha = "apple";
+    final String serialized = MAPPER.writeValueAsString(new AlphaExampleTwo(alpha));
+    assertThat(serialized, is("{\"type\":\"alpha\",\"alpha\":\"" + alpha + "\"}"));
+  }
+
+  @Test
+  public void twoAlphaDeserializationTest() throws IOException {
     final String alpha = "apple";
     ExampleTwo two =
         MAPPER.readValue("{\"type\":\"alpha\",\"alpha\":\"" + alpha + "\"}", ExampleTwo.class);
@@ -242,12 +266,20 @@ public class Jdk17SealedClassesModuleTest {
   }
 
   @Test
-  public void twoBravoTest() throws IOException {
+  public void twoBravoDeserializationTest() throws IOException {
     final String bravo = "blueberry";
     // Make sure we pick up the "bravo" name from the @@JsonSubTypes annotation.
     ExampleTwo two =
         MAPPER.readValue("{\"type\":\"bravo\",\"bravo\":\"" + bravo + "\"}", ExampleTwo.class);
     assertThat(two, is(new BravoExampleTwo(bravo)));
+  }
+
+  @Test
+  public void twoBravoSerializationTest() throws IOException {
+    final String bravo = "blueberry";
+    final String serialized = MAPPER.writeValueAsString(new BravoExampleTwo(bravo));
+    // Make sure we pick up the "bravo" name from the @@JsonSubTypes annotation.
+    assertThat(serialized, is("{\"type\":\"bravo\",\"bravo\":\"" + bravo + "\"}"));
   }
 
   /**
@@ -352,7 +384,14 @@ public class Jdk17SealedClassesModuleTest {
   }
 
   @Test
-  public void threeAlphaTest() throws IOException {
+  public void threeAlphaSerializationTest() throws IOException {
+    final String alpha = "apple";
+    final String serialized = MAPPER.writeValueAsString(new AlphaExampleThree(alpha));
+    assertThat(serialized, is("{\"type\":\"alpha\",\"alpha\":\"" + alpha + "\"}"));
+  }
+
+  @Test
+  public void threeAlphaDeserializationTest() throws IOException {
     final String alpha = "apple";
     ExampleThree three =
         MAPPER.readValue("{\"type\":\"alpha\",\"alpha\":\"" + alpha + "\"}", ExampleThree.class);
@@ -360,11 +399,19 @@ public class Jdk17SealedClassesModuleTest {
   }
 
   @Test
-  public void threeBravoTest() throws IOException {
+  public void threeBravoDeserializationTest() throws IOException {
     final String bravo = "blueberry";
     // Make sure we pick up the "bravo" name from the @@JsonSubTypes annotation.
     ExampleThree three =
         MAPPER.readValue("{\"type\":\"bravo\",\"bravo\":\"" + bravo + "\"}", ExampleThree.class);
     assertThat(three, is(new BravoExampleThree(bravo)));
+  }
+
+  @Test
+  public void threeBravoSerializationTest() throws IOException {
+    final String bravo = "blueberry";
+    final String serialized = MAPPER.writeValueAsString(new BravoExampleThree(bravo));
+    // Make sure we pick up the "bravo" name from the @@JsonSubTypes annotation.
+    assertThat(serialized, is("{\"type\":\"bravo\",\"bravo\":\"" + bravo + "\"}"));
   }
 }
