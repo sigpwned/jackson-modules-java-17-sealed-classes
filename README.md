@@ -59,7 +59,7 @@ Without this module, sealed classes must use the `@JsonSubTypes` annotation for 
         }
     }
 
-However, this is repetitive, since sealed classes must already enumerate their subtypes explicitly. With this module, users get polymorphic serialization of sealed classes by using only the `@JsonTypeInfo` annotation on the parent sealed class. Users can also add `@JsonTypeName` to child classes to customize subtype naming, but it is not required.
+However, this is repetitive, since sealed classes already enumerate their subtypes explicitly. With this module, users get polymorphic serialization of sealed classes by using only the `@JsonTypeInfo` annotation on the parent sealed class. Users can also add `@JsonTypeName` to child classes to customize subtype naming, but it is not required.
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
     public sealed class SealedExample permits AlphaSealedExample, BravoSealedExample {
