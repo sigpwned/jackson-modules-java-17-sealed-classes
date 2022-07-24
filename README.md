@@ -10,10 +10,18 @@
 
 * Change any other aspects of Jackson serialization
 
-## Java 17 Sealed Classes
+## Usage
 
-Java 17 [sealed classes](https://docs.oracle.com/en/java/javase/17/language/sealed-classes-and-interfaces.html) allow users to declare class hierarchies with fixed members. This change combined with [switch pattern matching](https://docs.oracle.com/en/java/javase/17/language/pattern-matching-switch-expressions-and-statements.html) brings Java a big step closer to [algebraic types](https://en.wikipedia.org/wiki/Algebraic_data_type). A simple example of sealed classes is here:
+To activate this feature, users must register the `Jdk17SealedClassesModule` module with the `ObjectMapper`. Simply include this library, and add the module to the `ObjectMapper`:
 
+    ObjectMapper mapper=new ObjectMapper().registerModule(new Jdk17SealedClassesModule());
+
+Without this module, sealed classes must use the `@JsonSubTypes` annotation for [polymorphic serialization](https://www.baeldung.com/jackson-annotations), just like any other class:
+
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+    @JsonSubTypes({
+        @JsonSubTypes.Type(value=AlphaSealedExample.class, name="alpha"),
+        @JsonSubTypes.Type(value=BravoSealedExample.class, name="bravo")})
     public sealed class SealedExample permits AlphaSealedExample, BravoSealedExample {
     }
     
@@ -51,17 +59,7 @@ Java 17 [sealed classes](https://docs.oracle.com/en/java/javase/17/language/seal
         }
     }
 
-The `SealedExample` class has exactly two child classes: `AlphaSealedExample` and `BravoSealedExample`, per its declaration. No other classes are allowed to extend `SealedExample`, by definition. In this example, `AlphaSealedExample` and `BravoSealedExample` are both `final`, so `SealedExample` is guaranteed not to have any other ancestor classes, but the feature does allow for more nesting.
-
-## Usage
-
-Registering the module is simple. Simply include this library, and add the module to the `ObjectMapper`:
-
-    ObjectMapper mapper=new ObjectMapper().registerModule(new Jdk17SealedClassesModule());
-
-Without this module, sealed classes must use the `@JsonSubTypes` annotation like any other class, just like in [this example](https://www.baeldung.com/jackson-annotations). With this module, users get polymorphic serialization of sealed classes with only the the `@JsonTypeInfo` on the parent sealed class. Users can also add `@JsonTypeName` to child classes to customize subtype naming.
-
-Adapting the above example:
+However, this is repetitive, since sealed classes must already enumerate their subtypes explicitly. With this module, users get polymorphic serialization of sealed classes by using only the `@JsonTypeInfo` annotation on the parent sealed class. Users can also add `@JsonTypeName` to child classes to customize subtype naming, but it is not required.
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
     public sealed class SealedExample permits AlphaSealedExample, BravoSealedExample {
@@ -69,13 +67,41 @@ Adapting the above example:
     
     @JsonTypeName("alpha")
     public final class AlphaSealedExample extends SealedExample {
+        private String alpha;
+        
+        public String getAlpha() {
+            return alpha;
+        }
+        
+        public void setAlpha(String alpha) {
+            this.alpha = alpha;
+        }
+        
+        public SealedExample withAlpha(String alpha) {
+            setAlpha(alpha);
+            return this;
+        }
     }
     
     @JsonTypeName("bravo")
     public final class BravoSealedExample extends SealedExample {
+        private String bravo;
+        
+        public String getBravo() {
+            return bravo;
+        }
+        
+        public void setBravo(String bravo) {
+            this.bravo = bravo;
+        }
+        
+        public SealedExample withBravo(String bravo) {
+            setBravo(bravo);
+            return this;
+        }
     }
     
-Would result in the following JSON:
+Either example would result in the following JSON:
 
     serialize(new AlphaSealedExample().withAlpha("value")) → {"type":"alpha","alpha":"value"}
 
