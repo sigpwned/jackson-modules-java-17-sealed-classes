@@ -13,15 +13,22 @@
     <description>Improved support for Java 17 Sealed Classes</description>
 
     <url>https://github.com/sigpwned/jackson-modules-java-17-sealed-classes</url>
+
     <scm>
         <connection>scm:git:git@github.com:sigpwned/jackson-modules-java-17-sealed-classes.git</connection>
         <developerConnection>scm:git:git@github.com:sigpwned/jackson-modules-java-17-sealed-classes.git</developerConnection>
         <url>http://github.com/sigpwned/jackson-modules-java-17-sealed-classes</url>
         <tag>HEAD</tag>
     </scm>
+
     <issueManagement>
         <url>https://github.com/sigpwned/jackson-modules-java-17-sealed-classes/issues</url>
     </issueManagement>
+
+    <properties>
+        <sonar.organization>sigpwned</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    </properties>
 
     <build>
         <plugins>

@@ -36,12 +36,10 @@ public class Jdk17SealedClassesAnnotationIntrospector extends JacksonAnnotationI
    */
   @Override
   public List<NamedType> findSubtypes(Annotated a) {
-    if (a.getAnnotated() instanceof Class<?> klass) {
-      if (klass.isSealed()) {
-        Class<?>[] permittedSubclasses = klass.getPermittedSubclasses();
-        if (permittedSubclasses.length > 0) {
-          return Arrays.stream(permittedSubclasses).map(psc -> new NamedType(psc)).toList();
-        }
+    if (a.getAnnotated() instanceof Class<?> klass && klass.isSealed()) {
+      Class<?>[] permittedSubclasses = klass.getPermittedSubclasses();
+      if (permittedSubclasses.length > 0) {
+        return Arrays.stream(permittedSubclasses).map(psc -> new NamedType(psc)).toList();
       }
     }
     return null;

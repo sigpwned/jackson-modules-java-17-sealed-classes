@@ -11,7 +11,7 @@ public class Jdk17SealedClassesModule extends Module {
 
   @Override
   public Version version() {
-    // TODO PackageVersion.java
+    // TODO Generate proper version?
     return Version.unknownVersion();
   }
 
