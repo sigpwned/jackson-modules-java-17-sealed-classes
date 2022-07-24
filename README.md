@@ -1,4 +1,4 @@
-# Jackson Modules - Java 17 Sealed Classes
+# Jackson Modules - Java 17 Sealed Classes [![tests](https://github.com/sigpwned/jackson-modules-java-17-sealed-classes/actions/workflows/tests.yml/badge.svg)](https://github.com/sigpwned/jackson-modules-java-17-sealed-classes/actions/workflows/tests.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sigpwned_jackson-modules-java-17-sealed-classes&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=sigpwned_jackson-modules-java-17-sealed-classes)
 
 `jackson-modules-java17-sealed-classes` is a [Jackson](https://github.com/FasterXML/jackson) module that adds improved support for polymorphic serialization of Java 17 sealed classes.
 
@@ -53,7 +53,11 @@ Java 17 [sealed classes](https://docs.oracle.com/en/java/javase/17/language/seal
 
 The `SealedExample` class has exactly two child classes: `AlphaSealedExample` and `BravoSealedExample`, per its declaration. No other classes are allowed to extend `SealedExample`, by definition. In this example, `AlphaSealedExample` and `BravoSealedExample` are both `final`, so `SealedExample` is guaranteed not to have any other ancestor classes, but the feature does allow for more nesting.
 
-## Examples
+## Usage
+
+Registering the module is simple. Simply include this library, and add the module to the `ObjectMapper`:
+
+    ObjectMapper mapper=new ObjectMapper().registerModule(new Jdk17SealedClassesModule());
 
 Without this module, sealed classes must use the `@JsonSubTypes` annotation like any other class, just like in [this example](https://www.baeldung.com/jackson-annotations). With this module, users get polymorphic serialization of sealed classes with only the the `@JsonTypeInfo` on the parent sealed class. Users can also add `@JsonTypeName` to child classes to customize subtype naming.
 
