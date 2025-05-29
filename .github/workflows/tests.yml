@@ -25,12 +25,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Cache SonarCloud packages
-      uses: actions/cache@v4.0.0
-      with:
-        path: ~/.sonar/cache
-        key: ${{ runner.os }}-sonar
-        restore-keys: ${{ runner.os }}-sonar
     - name: Cache Maven packages
       uses: actions/cache@v4.0.0
       with:
@@ -40,14 +34,4 @@ jobs:
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-        mvn                                                    \
-        -B                                                     \
-        clean                                                  \
-        org.jacoco:jacoco-maven-plugin:prepare-agent           \
-        verify                                                 \
-        org.jacoco:jacoco-maven-plugin:report                  \
-        org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-        -Dsonar.projectKey=sigpwned_jackson-modules-java-17-sealed-classes \
-        --file pom.xml
+      run: mvn -B clean verify --file pom.xml

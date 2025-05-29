@@ -35,14 +35,6 @@
         <url>https://github.com/sigpwned/jackson-modules-java-17-sealed-classes/issues</url>
     </issueManagement>
 
-    <properties>
-        <sonar.organization>sigpwned</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.exclusions>
-          **/pom.xml
-        </sonar.exclusions>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
