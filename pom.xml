@@ -49,7 +49,6 @@
         </plugins>
     </build>
 
-    <!-- NOTE: `dependencyManagement` comes from jackson-bom since 2.8.5 -->
     <dependencyManagement>
         <dependencies>
             <dependency>
